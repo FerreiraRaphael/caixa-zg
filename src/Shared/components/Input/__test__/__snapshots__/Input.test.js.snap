@@ -1,0 +1,45 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Input Component should render with loading 1`] = `
+<WithStyles(FormControl)
+  fullWidth={false}
+>
+  <WithStyles(InputLabel)>
+    test
+  </WithStyles(InputLabel)>
+  <WithStyles(Input)
+    autoFocus={false}
+    endAdornment={
+      <WithStyles(IconButton)>
+        <WithStyles(CircularProgress)
+          tabIndex={-1}
+        />
+      </WithStyles(IconButton)>
+    }
+    onChange={[Function]}
+    value="value"
+  />
+</WithStyles(FormControl)>
+`;
+
+exports[`Input Component should render without loading 1`] = `
+<WithStyles(FormControl)
+  fullWidth={false}
+>
+  <WithStyles(InputLabel)>
+    test
+  </WithStyles(InputLabel)>
+  <WithStyles(Input)
+    autoFocus={false}
+    endAdornment={
+      <WithStyles(IconButton)>
+        <pure(Search)
+          tabIndex={-1}
+        />
+      </WithStyles(IconButton)>
+    }
+    onChange={[Function]}
+    value="value"
+  />
+</WithStyles(FormControl)>
+`;
