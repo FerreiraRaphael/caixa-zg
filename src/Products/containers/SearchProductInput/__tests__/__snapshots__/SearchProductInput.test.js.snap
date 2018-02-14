@@ -6,7 +6,9 @@ exports[`SearchProductInput Component should render 1`] = `
   fullWidth={true}
   label="Buscar por Nome ou SKU"
   loading={false}
+  onBlur={[Function]}
   onChange={[Function]}
+  onFocus={[Function]}
   value=""
 />
 `;

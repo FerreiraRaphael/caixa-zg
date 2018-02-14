@@ -11,20 +11,21 @@ import PurchasesReducer, {
   removeItem,
   deleteItem,
   cleanItems
-} from "./purchases";
-describe("Purchase Redux module", () => {
+} from './purchases';
+
+describe('Purchase Redux module', () => {
   const simulation = {
     items: [
       {
         quantity: 10,
-        product: "5a69bbbe085eb50006b7515b",
+        product: '5a69bbbe085eb50006b7515b',
         subtotal: 120,
         discount: 0,
         total: 120
       },
       {
         quantity: 6,
-        product: "5a69bbd2085eb50006b75162",
+        product: '5a69bbd2085eb50006b75162',
         subtotal: 4.8,
         discount: 0,
         total: 4.8
@@ -34,81 +35,81 @@ describe("Purchase Redux module", () => {
     discount: 0,
     total: 124.8
   };
-  describe("Purchase actions", () => {
-    it("should create a CREATE_PURCHASE action", () => {
+  describe('Purchase actions', () => {
+    it('should create a CREATE_PURCHASE action', () => {
       expect(createPurchase()).toEqual({ type: types.CREATE_PURCHASE });
     });
 
-    it("should create a CREATE_PURCHASE_SUCCESS action", () => {
+    it('should create a CREATE_PURCHASE_SUCCESS action', () => {
       expect(createPurchaseSuccess()).toEqual({
         type: types.CREATE_PURCHASE_SUCCESS
       });
     });
 
-    it("should create a CREATE_PURCHASE_FAIL action", () => {
-      const error = { error: "Error" };
+    it('should create a CREATE_PURCHASE_FAIL action', () => {
+      const error = { error: 'Error' };
       expect(createPurchaseError(error)).toEqual({
         type: types.CREATE_PURCHASE_FAIL,
         payload: error
       });
     });
 
-    it("should create a SIMULATE_PURCHASE action", () => {
+    it('should create a SIMULATE_PURCHASE action', () => {
       expect(simulatePurchase()).toEqual({ type: types.SIMULATE_PURCHASE });
     });
 
-    it("should create a SIMULATE_PURCHASE_SUCCESS action", () => {
+    it('should create a SIMULATE_PURCHASE_SUCCESS action', () => {
       expect(simulatePurchaseSuccess(simulation)).toEqual({
         type: types.SIMULATE_PURCHASE_SUCCESS,
         payload: simulation
       });
     });
 
-    it("should create a SIMULATE_PURCHASE_FAIL action", () => {
-      const error = { error: "Error" };
+    it('should create a SIMULATE_PURCHASE_FAIL action', () => {
+      const error = { error: 'Error' };
       expect(simulatePurchaseError(error)).toEqual({
         type: types.SIMULATE_PURCHASE_FAIL,
         payload: error
       });
     });
 
-    it("should create a ADD_ITEM action", () => {
-      const id = "1";
+    it('should create a ADD_ITEM action', () => {
+      const id = '1';
       expect(addItem(id)).toEqual({
         type: types.ADD_ITEM,
         payload: id
       });
     });
 
-    it("should create a REMOVE_ITEM action", () => {
-      const id = "1";
+    it('should create a REMOVE_ITEM action', () => {
+      const id = '1';
       expect(removeItem(id)).toEqual({
         type: types.REMOVE_ITEM,
         payload: id
       });
     });
 
-    it("should create a DELETE_ITEM action", () => {
-      const id = "1";
+    it('should create a DELETE_ITEM action', () => {
+      const id = '1';
       expect(deleteItem(id)).toEqual({
         type: types.DELETE_ITEM,
         payload: id
       });
     });
 
-    it("should create a CLEAN_ITEMS action", () => {
+    it('should create a CLEAN_ITEMS action', () => {
       expect(cleanItems()).toEqual({
         type: types.CLEAN_ITEMS
       });
     });
   });
 
-  describe("Purchases Reducer", () => {
-    it("should return initial state when initialized", () => {
+  describe('Purchases Reducer', () => {
+    it('should return initial state when initialized', () => {
       expect(PurchasesReducer(undefined, {})).toEqual(initialState);
     });
 
-    it("should handle CREATE_PURCHASE and CREATE_PURCHASE_SUCCESS", () => {
+    it('should handle CREATE_PURCHASE and CREATE_PURCHASE_SUCCESS', () => {
       const state = PurchasesReducer(initialState, createPurchase());
       expect(state).toEqual({
         ...initialState,
@@ -120,9 +121,9 @@ describe("Purchase Redux module", () => {
       });
     });
 
-    it("should handle CREATE_PURCHASE and CREATE_PURCHASE_FAIL", () => {
+    it('should handle CREATE_PURCHASE and CREATE_PURCHASE_FAIL', () => {
       const state = PurchasesReducer(initialState, createPurchase());
-      const error = "error";
+      const error = 'error';
       expect(state).toEqual({
         ...initialState,
         creating: true
@@ -134,22 +135,24 @@ describe("Purchase Redux module", () => {
       });
     });
 
-    it("should handle SIMULATE_PURCHASE and SIMULATE_PURCHASE_SUCCESS", () => {
+    it('should handle SIMULATE_PURCHASE and SIMULATE_PURCHASE_SUCCESS', () => {
       const state = PurchasesReducer(initialState, simulatePurchase());
       expect(state).toEqual({
         ...initialState,
         simulating: true
       });
-      expect(PurchasesReducer(state, simulatePurchaseSuccess(simulation))).toEqual({
+      expect(
+        PurchasesReducer(state, simulatePurchaseSuccess(simulation))
+      ).toEqual({
         ...state,
         simulating: false,
         simulation
       });
     });
 
-    it("should handle SIMULATE_PURCHASE and SIMULATE_PURCHASE_FAIL", () => {
+    it('should handle SIMULATE_PURCHASE and SIMULATE_PURCHASE_FAIL', () => {
       const state = PurchasesReducer(initialState, simulatePurchase());
-      const error = "error";
+      const error = 'error';
       expect(state).toEqual({
         ...initialState,
         simulating: true
@@ -161,7 +164,7 @@ describe("Purchase Redux module", () => {
       });
     });
 
-    it("should handle ADD_ITEM", () => {
+    it('should handle ADD_ITEM', () => {
       const state = PurchasesReducer(initialState, addItem(1));
       expect(state).toEqual({
         ...initialState,
@@ -173,7 +176,7 @@ describe("Purchase Redux module", () => {
       });
     });
 
-    it("should handle REMOVE_ITEM", () => {
+    it('should handle REMOVE_ITEM', () => {
       let state = PurchasesReducer(
         { ...initialState, items: [{ product: 1, quantity: 2 }] },
         removeItem(1)
@@ -193,7 +196,7 @@ describe("Purchase Redux module", () => {
       });
     });
 
-    it("should handle CLEAN_ITEMS", () => {
+    it('should handle CLEAN_ITEMS', () => {
       const state = PurchasesReducer(
         { ...initialState, items: [{ product: 1, quantity: 2 }] },
         cleanItems()
@@ -204,7 +207,7 @@ describe("Purchase Redux module", () => {
       });
     });
 
-    it("should handle DELETE_ITEM", () => {
+    it('should handle DELETE_ITEM', () => {
       let state = PurchasesReducer(
         {
           ...initialState,

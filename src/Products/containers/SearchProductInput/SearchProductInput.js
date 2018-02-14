@@ -1,7 +1,7 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
 
-import Input from "../../../Shared/components/Input";
+import Input from '../../../Shared/components/Input';
 
 const SearchProductInputPropTypes = {
   /**
@@ -15,8 +15,8 @@ const SearchProductInputPropTypes = {
  * no evento de mudança.
  */
 class SearchProductInput extends React.Component {
-  state = {
-    value: ""
+  static state = {
+    value: ''
   };
 
   handleChange = event => {

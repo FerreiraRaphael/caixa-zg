@@ -16,6 +16,7 @@ exports[`Input Component should render with loading 1`] = `
         />
       </WithStyles(IconButton)>
     }
+    inputRef={[Function]}
     onChange={[Function]}
     value="value"
   />
@@ -38,6 +39,7 @@ exports[`Input Component should render without loading 1`] = `
         />
       </WithStyles(IconButton)>
     }
+    inputRef={[Function]}
     onChange={[Function]}
     value="value"
   />
