@@ -14,6 +14,16 @@ import PurchasesReducer, {
 } from './purchases';
 
 describe('Purchase Redux module', () => {
+  const product = {
+    name: 'Sabão',
+    sku: 'sab',
+    price: 12,
+    quantity: 10,
+    product: '5a69bbbe085eb50006b7515b',
+    subtotal: 120,
+    discount: 0,
+    total: 120
+  };
   const simulation = {
     items: [
       {
@@ -74,26 +84,23 @@ describe('Purchase Redux module', () => {
     });
 
     it('should create a ADD_ITEM action', () => {
-      const id = '1';
-      expect(addItem(id)).toEqual({
+      expect(addItem(product)).toEqual({
         type: types.ADD_ITEM,
-        payload: id
+        payload: product
       });
     });
 
     it('should create a REMOVE_ITEM action', () => {
-      const id = '1';
-      expect(removeItem(id)).toEqual({
+      expect(removeItem(product)).toEqual({
         type: types.REMOVE_ITEM,
-        payload: id
+        payload: product
       });
     });
 
     it('should create a DELETE_ITEM action', () => {
-      const id = '1';
-      expect(deleteItem(id)).toEqual({
+      expect(deleteItem(product)).toEqual({
         type: types.DELETE_ITEM,
-        payload: id
+        payload: product
       });
     });
 
@@ -165,32 +172,32 @@ describe('Purchase Redux module', () => {
     });
 
     it('should handle ADD_ITEM', () => {
-      const state = PurchasesReducer(initialState, addItem(1));
+      const state = PurchasesReducer(initialState, addItem(product));
       expect(state).toEqual({
         ...initialState,
-        items: [{ product: 1, quantity: 1 }]
+        items: [{ ...product, quantity: 1 }]
       });
-      expect(PurchasesReducer(state, addItem(1))).toEqual({
+      expect(PurchasesReducer(state, addItem(product))).toEqual({
         ...state,
-        items: [{ product: 1, quantity: 2 }]
+        items: [{ ...product, quantity: 2 }]
       });
     });
 
     it('should handle REMOVE_ITEM', () => {
       let state = PurchasesReducer(
-        { ...initialState, items: [{ product: 1, quantity: 2 }] },
-        removeItem(1)
+        { ...initialState, items: [{ ...product, quantity: 2 }] },
+        removeItem(product)
       );
       expect(state).toEqual({
         ...initialState,
-        items: [{ product: 1, quantity: 1 }]
+        items: [{ ...product, quantity: 1 }]
       });
-      state = PurchasesReducer(state, removeItem(1));
+      state = PurchasesReducer(state, removeItem(product));
       expect(state).toEqual({
         ...state,
         items: []
       });
-      expect(PurchasesReducer(state, removeItem(1))).toEqual({
+      expect(PurchasesReducer(state, removeItem(product))).toEqual({
         ...state,
         items: []
       });
@@ -208,23 +215,24 @@ describe('Purchase Redux module', () => {
     });
 
     it('should handle DELETE_ITEM', () => {
+      const product2 = { ...product, product: 1 };
       let state = PurchasesReducer(
         {
           ...initialState,
-          items: [{ product: 1, quantity: 2 }, { product: 2, quantity: 2 }]
+          items: [product, product2]
         },
-        deleteItem(1)
+        deleteItem(product)
       );
       expect(state).toEqual({
         ...initialState,
-        items: [{ product: 2, quantity: 2 }]
+        items: [product2]
       });
-      state = PurchasesReducer(state, deleteItem(2));
+      state = PurchasesReducer(state, deleteItem(product2));
       expect(state).toEqual({
         ...initialState,
         items: []
       });
-      state = PurchasesReducer(state, deleteItem(2));
+      state = PurchasesReducer(state, deleteItem(product2));
       expect(state).toEqual({
         ...initialState,
         items: []

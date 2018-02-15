@@ -3,10 +3,10 @@
  * que envolve compras.
  */
 
-import update from "ramda/src/update";
-import remove from "ramda/src/remove";
+import update from 'ramda/src/update';
+import remove from 'ramda/src/remove';
 
-import { findIndexByProp } from "../../lib/utility/array";
+import { findIndexByProp } from '../../lib/utility/array';
 
 /**
  * Helper Functions
@@ -51,11 +51,11 @@ function subItemQuantity(item, qnt = 1) {
  * @return {Array} Nova coleção de produtos.
  */
 function addOrCreateItemById(product, items) {
-  const index = findIndexByProp("product", product)(items);
+  const index = findIndexByProp('product', product.product)(items);
   const element = items[index];
   return element
     ? update(index)(addItemQuantity(element))(items)
-    : [...items, { product, quantity: 1 }];
+    : [...items, { ...product, quantity: 1 }];
 }
 
 /**
@@ -66,7 +66,7 @@ function addOrCreateItemById(product, items) {
  * @return {Array} Nova coleção de produtos.
  */
 function subOrDeleteItemById(product, items) {
-  const index = findIndexByProp("product", product)(items);
+  const index = findIndexByProp('product', product.product)(items);
   const item = items[index];
 
   if (item === undefined) {
@@ -85,7 +85,7 @@ function subOrDeleteItemById(product, items) {
  * @return {Array} Nova coleção de produtos.
  */
 function deleteItemById(product, items) {
-  const index = findIndexByProp("product", product)(items);
+  const index = findIndexByProp('product', product.product)(items);
   return remove(index)(1)(items);
 }
 
@@ -94,17 +94,17 @@ function deleteItemById(product, items) {
  */
 
 export const types = {
-  ADD_PRICE: "purchase/ADD_PRICE",
-  ADD_ITEM: "purchase/ADD_ITEM",
-  REMOVE_ITEM: "purchase/REMOVE_ITEM",
-  CLEAN_ITEMS: "purchase/CLEAN_ITEM",
-  DELETE_ITEM: "purchase/DELETE_ITEM",
-  CREATE_PURCHASE: "purchase/CREATE_PURCHASE",
-  CREATE_PURCHASE_SUCCESS: "purchase/CREATE_PURCHASE_SUCCESS",
-  CREATE_PURCHASE_FAIL: "purchase/CREATE_PURCHASE_FAIL",
-  SIMULATE_PURCHASE: "purchase/SIMULATE_PURCHASE",
-  SIMULATE_PURCHASE_SUCCESS: "purchase/SIMULATE_PURCHASE_SUCCESS",
-  SIMULATE_PURCHASE_FAIL: "purchase/SIMULATE_PURCHASE_FAIL"
+  ADD_PRICE: 'purchase/ADD_PRICE',
+  ADD_ITEM: 'purchase/ADD_ITEM',
+  REMOVE_ITEM: 'purchase/REMOVE_ITEM',
+  CLEAN_ITEMS: 'purchase/CLEAN_ITEM',
+  DELETE_ITEM: 'purchase/DELETE_ITEM',
+  CREATE_PURCHASE: 'purchase/CREATE_PURCHASE',
+  CREATE_PURCHASE_SUCCESS: 'purchase/CREATE_PURCHASE_SUCCESS',
+  CREATE_PURCHASE_FAIL: 'purchase/CREATE_PURCHASE_FAIL',
+  SIMULATE_PURCHASE: 'purchase/SIMULATE_PURCHASE',
+  SIMULATE_PURCHASE_SUCCESS: 'purchase/SIMULATE_PURCHASE_SUCCESS',
+  SIMULATE_PURCHASE_FAIL: 'purchase/SIMULATE_PURCHASE_FAIL'
 };
 
 /**
@@ -238,43 +238,42 @@ export const createPurchaseError = error => ({
 /**
  * Ação adiciona um item ao estado.
  * @function addItem
- * @param {string} id Id do produto.
+ * @param {object} product Objeto do produto.
  * @return {Object} Objeto Ação do tipo ADD_ITEM
  */
-export const addItem = id => ({
+export const addItem = product => ({
   type: types.ADD_ITEM,
-  payload: id
+  payload: product
 });
 
 /**
  * Ação remove um item do estado.
  * @function removeItem
- * @param {string} id Id do produto.
+ * @param {object} product Objeto do produto.
  * @return {Object} Objeto Ação do tipo REMOVE_ITEM
  */
-export const removeItem = id => ({
+export const removeItem = product => ({
   type: types.REMOVE_ITEM,
-  payload: id
+  payload: product
 });
 
 /**
  * Ação deleta um item do estado.
  * @function deleteItem
- * @param {string} id Id do produto.
+ * @param {object} product Objeto do produto.
  * @return {Object} Objeto Ação do tipo DELETE_ITEM
  */
-export const deleteItem = id => ({
+export const deleteItem = product => ({
   type: types.DELETE_ITEM,
-  payload: id
+  payload: product
 });
 
 /**
  * Ação deleta todos os items do estado.
  * @function cleanItems
- * @param {string} id Id do produto.
  * @return {Object} Objeto Ação do tipo CLEAN_ITEMS
  */
-export const cleanItems = id => ({
+export const cleanItems = () => ({
   type: types.CLEAN_ITEMS
 });
 

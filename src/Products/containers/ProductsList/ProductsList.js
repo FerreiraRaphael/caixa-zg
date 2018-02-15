@@ -1,12 +1,18 @@
-import React from "react";
+import React from 'react';
 
-import List from "../../Shared/components/List";
-import { connect } from "react-redux";
+import List from '../../../Shared/components/List';
 
 class ProductsList extends React.Component {
   state = {
     cursor: 0
   };
+
+  componentDidMount() {
+    const { items } = this.props;
+    if (items.length === 0) {
+      this.props.fetchProducts();
+    }
+  }
 
   handleKeyPress = e => {
     const { cursor, result } = this.state;
@@ -35,8 +41,4 @@ class ProductsList extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
-  items: state.products.items
-});
-
-export default connect(mapStateToProps)(ProductsList);
+export default ProductsList;
