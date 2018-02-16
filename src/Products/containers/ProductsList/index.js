@@ -12,7 +12,7 @@ import { fetchProducts } from '../../modules/products';
 export const mapStateToProps = state => {
   const items = state.products.items.map(item => {
     const index = findIndexByProp('product', item.product)(
-      state.products.items
+      state.purchases.items
     );
     const purchase = state.purchases.items[index];
     return { ...item, quantity: purchase ? purchase.quantity : 0 };
@@ -24,7 +24,7 @@ export const mapStateToProps = state => {
 
 export const mapDispatchToProps = dispatch => ({
   fetchProducts: () => {
-    dispatch(fetchProducts);
+    dispatch(fetchProducts());
   },
   addItem: product => {
     dispatch(addItem(product));

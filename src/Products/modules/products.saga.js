@@ -3,11 +3,11 @@
  * que envolve produtos.
  */
 
-import { call, put, takeLatest } from "redux-saga/effects";
+import { call, put, takeLatest } from 'redux-saga/effects';
 
-import { fetchProductsSuccess, fetchProductsError, types } from "./products";
+import { fetchProductsSuccess, fetchProductsError, types } from './products';
 
-import Api from "../../lib/api";
+import Api from '../../lib/api';
 
 /**
  * Listener para ações do tipo FETCH_PRODUCTS.
@@ -20,7 +20,8 @@ export function* fetchProducts(action) {
   try {
     const { data } = yield call(Api.Products.fetchProducts, action.payload);
     const { _items, _links } = data;
-    yield put(fetchProductsSuccess({ items: _items, links: _links }));
+    const items = _items.map(item => ({ ...item, product: item._id }));
+    yield put(fetchProductsSuccess({ items, links: _links }));
   } catch (e) {
     yield put(fetchProductsError(e));
   }

@@ -2,27 +2,27 @@ import {
   initSagaTester,
   mockPromiseReject,
   mockPromiseResolve
-} from "../../lib/test/helpers";
+} from '../../lib/test/helpers';
 import ProductsReducer, {
   types,
   initialState,
   fetchProducts
-} from "./products";
-import ProductsSaga from "./products.saga";
-import Api from "../../lib/api";
+} from './products';
+import ProductsSaga from './products.saga';
+import Api from '../../lib/api';
 
-describe("Products sagas", () => {
-  describe("fetchProducts", () => {
+describe('Products sagas', () => {
+  describe('fetchProducts', () => {
     let sagaTester;
     beforeEach(() => {
       Api.Products.fetchProducts = jest.fn();
       sagaTester = initSagaTester(initialState, ProductsReducer, ProductsSaga);
     });
-    it("should call the api and call fetchProductsSuccess", async () => {
+    it('should call the api and call fetchProductsSuccess', async () => {
       const mockedResponse = {
         data: {
-          _items: ["value"],
-          _links: { next: "" }
+          _items: [{ _id: 1, name: 'product' }],
+          _links: { next: '' }
         }
       };
       Api.Products.fetchProducts.mockReturnValue(
@@ -30,10 +30,10 @@ describe("Products sagas", () => {
       );
       sagaTester.dispatch(
         fetchProducts({
-          name: "name",
-          sku: "",
-          page: "2",
-          max_results: "10"
+          name: 'name',
+          sku: '',
+          page: '2',
+          max_results: '10'
         })
       );
       expect(sagaTester.getState()).toEqual({
@@ -44,20 +44,20 @@ describe("Products sagas", () => {
       expect(sagaTester.getState()).toEqual({
         ...initialState,
         fetching: false,
-        items: mockedResponse.data._items,
+        items: [{ _id: 1, name: 'product', product: 1 }],
         searchLinks: mockedResponse.data._links
       });
     });
 
-    it("should call the api and call fetchProductError", async () => {
-      const error = "error";
+    it('should call the api and call fetchProductError', async () => {
+      const error = 'error';
       Api.Products.fetchProducts.mockReturnValue(mockPromiseReject(error));
       sagaTester.dispatch(
         fetchProducts({
-          name: "name",
-          sku: "",
-          page: "2",
-          max_results: "10"
+          name: 'name',
+          sku: '',
+          page: '2',
+          max_results: '10'
         })
       );
       expect(sagaTester.getState()).toEqual({

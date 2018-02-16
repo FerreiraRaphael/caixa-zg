@@ -223,7 +223,7 @@ describe('Purchase Redux module', () => {
         },
         deleteItem(product)
       );
-      expect(state).toEqual({
+      expect(PurchasesReducer(state, deleteItem(product))).toEqual({
         ...initialState,
         items: [product2]
       });

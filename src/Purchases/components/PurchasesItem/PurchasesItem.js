@@ -1,21 +1,21 @@
-import React from "react";
-import { withStyles, ListItem, Typography } from "material-ui";
+import React from 'react';
+import { withStyles, ListItem, Typography } from 'material-ui';
 
 const styles = theme => ({
   container: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "normal",
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'normal',
     borderBottom: `1px solid ${theme.palette.divider}`
   },
   flexSpaceBetween: {
-    display: "flex",
-    justifyContent: "space-between"
+    display: 'flex',
+    justifyContent: 'space-between'
   },
   flexEnd: {
-    display: "flex",
-    justifyContent: "flex-end",
-    alignItems: "flex-end"
+    display: 'flex',
+    justifyContent: 'flex-end',
+    alignItems: 'flex-end'
   }
 });
 
@@ -27,9 +27,41 @@ const PurchasesItem = ({
   discount,
   total,
   price,
-  classes
+  classes,
+  onAdd,
+  onRemove,
+  on
 }) => (
   <ListItem className={classes.container}>
+    <div>
+      <IconButton
+        onClick={() => onAdd({ product, name, sku, price })}
+        tabIndex={-1}
+        classes={{ root: classes.buttonIconRoot }}
+      >
+        <Add />
+      </IconButton>
+      <IconButton tabIndex={-1} classes={{ root: classes.buttonIconRoot }}>
+        <Typography variant="button">{quantity}</Typography>
+      </IconButton>
+      <IconButton
+        tabIndex={-1}
+        classes={{ root: classes.buttonIconRoot }}
+        onClick={() => onRemove({ product })}
+      >
+        <Remove />
+      </IconButton>
+      <IconButton
+        classes={{
+          root: `${classes.buttonIconRoot} ${classes.buttonDelete}`
+        }}
+        style={{ marginLeft: 5 }}
+        tabIndex={-1}
+        onClick={() => onDelete({ product })}
+      >
+        <Delete />
+      </IconButton>
+    </div>
     <div>
       <Typography>{`${name} ${sku}`}</Typography>
     </div>

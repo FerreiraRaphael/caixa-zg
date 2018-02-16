@@ -1,6 +1,6 @@
 import React from 'react';
 
-import List from '../../../Shared/components/List';
+import List from '../../components/List';
 
 class ProductsList extends React.Component {
   state = {
@@ -30,12 +30,15 @@ class ProductsList extends React.Component {
   };
 
   render() {
-    const { items } = this.props;
+    const { items, addItem, removeItem, deleteItem } = this.props;
     return (
       <List
         onKeyPress={this.handleKeyPress}
         selectedIndex={this.state.cursor}
         items={items}
+        onAdd={addItem}
+        onRemove={removeItem}
+        onDelete={deleteItem}
       />
     );
   }

@@ -3,17 +3,19 @@
  * que envolve compras.
  */
 
-import { call, put, takeLatest, takeEvery } from "redux-saga/effects";
+import { call, put, takeLatest, takeEvery, select } from 'redux-saga/effects';
 
 import {
   createPurchaseSuccess,
   createPurchaseError,
+  simulatePurchase,
   simulatePurchaseSuccess,
   simulatePurchaseError,
-  types
-} from "./purchases";
+  types,
+  cleanItems
+} from './purchases';
 
-import Api from "../../lib/api";
+import Api from '../../lib/api';
 
 /**
  * Listener para ações do tipo CREATE_PURCHASE.
@@ -22,9 +24,16 @@ import Api from "../../lib/api";
  * @function * createPurchase
  * @param  {type} action Ação do tipo CREATE_PURCHASE
  */
-export function* createPurchase(action) {
+export function* createPurchase() {
   try {
-    const products = yield call(Api.Purchases.createPurchase, action.payload);
+    const purchaseItems = yield select(state =>
+      state.purchases.items.map(item => ({
+        quantity: item.quantity,
+        product: item.product
+      }))
+    );
+    const products = yield call(Api.Purchases.createPurchase, purchaseItems);
+    yield put(cleanItems());
     yield put(createPurchaseSuccess(products));
   } catch (e) {
     yield put(createPurchaseError(e));
@@ -35,18 +44,24 @@ export function* createPurchase(action) {
  * Listener para ações do tipo SIMULATE_PURCHASE.
  * Faz chamada na api para simular compra e dispara
  * ação de sucesso ou erro.
- * @function * simulatePurchase
+ * @function * simulatePurchaseAsync
  * @param  {type} action Ação do tipo SIMULATE_PURCHASE
  */
-export function* simulatePurchase(action) {
-    try {
-      const products = yield call(Api.Purchases.simulatePurchase, action.payload);
-      yield put(simulatePurchaseSuccess(products));
-    } catch (e) {
-      yield put(simulatePurchaseError(e));
-    }
+export function* simulatePurchaseAsync() {
+  try {
+    yield put(simulatePurchase());
+    const purchase = yield select(state =>
+      state.purchases.items.map(item => ({
+        quantity: item.quantity,
+        product: item.product
+      }))
+    );
+    const { data } = yield call(Api.Purchases.simulatePurchase, purchase);
+    yield put(simulatePurchaseSuccess(data));
+  } catch (e) {
+    yield put(simulatePurchaseError(e));
   }
-  
+}
 
 /**
  * Watcher das ações de compra.
@@ -54,7 +69,9 @@ export function* simulatePurchase(action) {
  */
 function* PurchasesSaga() {
   yield takeEvery(types.CREATE_PURCHASE, createPurchase);
-  yield takeLatest(types.SIMULATE_PURCHASE, simulatePurchase)
+  yield takeLatest(types.ADD_ITEM, simulatePurchaseAsync);
+  yield takeLatest(types.REMOVE_ITEM, simulatePurchaseAsync);
+  yield takeLatest(types.DELETE_ITEM, simulatePurchaseAsync);
 }
 
 export default PurchasesSaga;

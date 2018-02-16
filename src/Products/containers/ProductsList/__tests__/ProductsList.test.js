@@ -62,12 +62,6 @@ describe('ProductsList Component', () => {
         products: {
           items: [
             {
-              name: 'Amaciante',
-              sku: 'AMA',
-              product: '5a69bbbe085eb50006b7515b',
-              price: 12
-            },
-            {
               name: 'Sabão',
               sku: 'SAB',
               product: '5a69bbd2085eb50006b75162',
@@ -78,19 +72,19 @@ describe('ProductsList Component', () => {
               sku: 'PRO',
               product: '1',
               price: 0.8
+            },
+            {
+              name: 'Amaciante',
+              sku: 'AMA',
+              product: '5a69bbbe085eb50006b7515b',
+              price: 12
             }
           ]
         }
       };
-      expect(mapStateToProps(state)).toEqual({
+      const props = mapStateToProps(state);
+      expect(props).toEqual({
         items: [
-          {
-            name: 'Amaciante',
-            sku: 'AMA',
-            quantity: 10,
-            product: '5a69bbbe085eb50006b7515b',
-            price: 12
-          },
           {
             name: 'Sabão',
             sku: 'SAB',
@@ -104,6 +98,13 @@ describe('ProductsList Component', () => {
             quantity: 0,
             product: '1',
             price: 0.8
+          },
+          {
+            name: 'Amaciante',
+            sku: 'AMA',
+            quantity: 10,
+            product: '5a69bbbe085eb50006b7515b',
+            price: 12
           }
         ]
       });

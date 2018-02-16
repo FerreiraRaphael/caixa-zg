@@ -1,51 +1,15 @@
-import React from "react";
-import { List, Button, Divider, withStyles } from "material-ui";
+import React from 'react';
+import {
+  List,
+  Button,
+  withStyles,
+  Typography,
+  Divider,
+  CircularProgress
+} from 'material-ui';
 
-import PurchasesTotal from "../../components/PurchasesTotal";
-import PurchasesItem from "../../components/PurchasesItem";
-
-const items = [
-  {
-    product: 1,
-    name: "teste",
-    sku: "tes",
-    quantity: 1,
-    subtotal: 19,
-    discount: 9,
-    total: 10,
-    price: 19
-  },
-  {
-    product: 2,
-    name: "teste",
-    sku: "tes",
-    quantity: 1,
-    subtotal: 19,
-    discount: 9,
-    total: 10,
-    price: 19
-  },
-  {
-    product: 3,
-    name: "teste",
-    sku: "tes",
-    quantity: 1,
-    subtotal: 19,
-    discount: 9,
-    total: 10,
-    price: 19
-  },
-  {
-    product: 4,
-    name: "teste",
-    sku: "tes",
-    quantity: 1,
-    subtotal: 19,
-    discount: 9,
-    total: 10,
-    price: 19
-  }
-];
+import PurchasesTotal from '../../components/PurchasesTotal';
+import PurchasesItem from '../../components/PurchasesItem';
 
 const styles = theme => ({
   container: {
@@ -59,25 +23,58 @@ const styles = theme => ({
   button: {
     borderRadius: 0,
     height: 80
+  },
+  drawerHeader: {
+    ...theme.mixins.toolbar,
+    display: 'flex',
+    flexDirection: 'column',
+    padding: `0 ${theme.spacing.unit * 2}px`,
+    justifyContent: 'center'
   }
 });
 
-const PurchasesList = ({ classes }) => (
+const PurchasesList = ({
+  classes,
+  items,
+  subtotal,
+  total,
+  discount,
+  creating,
+  simulating,
+  createPurchase
+}) => (
   <div className={classes.container}>
-    <List className={classes.list}>
+    <div className={classes.drawerHeader}>
+      <Typography color="textSecondary" variant="title">
+        Compras
+      </Typography>
+      <Typography color="textSecondary" variant="subheading">
+        Lista de Compras
+      </Typography>
+    </div>
+    <Divider />
+    <List style={{ overflow: `auto` }} className={classes.list}>
       {items.map(item => (
         <PurchasesItem key={item.product || item.name} {...item} />
       ))}
     </List>
-    <PurchasesTotal subtotal={19} total={10} discount={9} />
+    <PurchasesTotal subtotal={subtotal} total={total} discount={discount} />
     <Button
-      className={classes.button}
+      className={classes.buttonfosdi}
       variant="raised"
       size="large"
       color="primary"
       fullWidth
+      style={{ borderRadius: 0, height: 70 }}
+      disabled={creating || simulating}
+      onClick={() => createPurchase()}
     >
-      Finalizar
+      {(creating || simulating) && (
+        <CircularProgress style={{ marginRight: 10 }} />
+      )}
+      {creating && 'Criando compra'}
+      {simulating && 'Calculando descontos'}
+      {!creating && !simulating && 'Finalizar'}
     </Button>
   </div>
 );

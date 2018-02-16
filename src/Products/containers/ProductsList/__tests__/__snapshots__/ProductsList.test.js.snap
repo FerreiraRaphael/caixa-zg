@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ProductsList Component should render 1`] = `
+<List
+  items={Array []}
+  onKeyPress={[Function]}
+  selectedIndex={0}
+/>
+`;

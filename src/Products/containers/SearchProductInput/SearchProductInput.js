@@ -15,7 +15,7 @@ const SearchProductInputPropTypes = {
  * no evento de mudança.
  */
 class SearchProductInput extends React.Component {
-  static state = {
+  state = {
     value: ''
   };
 

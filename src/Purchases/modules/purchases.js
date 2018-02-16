@@ -86,7 +86,7 @@ function subOrDeleteItemById(product, items) {
  */
 function deleteItemById(product, items) {
   const index = findIndexByProp('product', product.product)(items);
-  return remove(index)(1)(items);
+  return index !== -1 ? remove(index)(1)(items) : items;
 }
 
 /**
@@ -118,7 +118,7 @@ export const initialState = {
   simulatingError: null,
   creating: false,
   creatingError: null,
-  simulation: null,
+  simulation: { items: [] },
   items: []
 };
 
@@ -188,7 +188,8 @@ export default (state = initialState, action) => {
     case types.CLEAN_ITEMS:
       return {
         ...state,
-        items: []
+        items: [],
+        simulation: initialState.simulation
       };
 
     case types.DELETE_ITEM:
