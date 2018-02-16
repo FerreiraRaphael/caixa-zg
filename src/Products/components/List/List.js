@@ -12,7 +12,10 @@ const List = ({
   onDelete,
   onRemove
 }) => (
-  <LIST style={{ overflow: `auto` }} onKeyUp={onKeyPress}>
+  <LIST
+    style={{ height: `calc(100% - 105px)`, overflow: `auto` }}
+    onKeyUp={onKeyPress}
+  >
     {items.map((item, i) => (
       <ListItem
         key={item._id || item.name}

@@ -27,41 +27,9 @@ const PurchasesItem = ({
   discount,
   total,
   price,
-  classes,
-  onAdd,
-  onRemove,
-  on
+  classes
 }) => (
   <ListItem className={classes.container}>
-    <div>
-      <IconButton
-        onClick={() => onAdd({ product, name, sku, price })}
-        tabIndex={-1}
-        classes={{ root: classes.buttonIconRoot }}
-      >
-        <Add />
-      </IconButton>
-      <IconButton tabIndex={-1} classes={{ root: classes.buttonIconRoot }}>
-        <Typography variant="button">{quantity}</Typography>
-      </IconButton>
-      <IconButton
-        tabIndex={-1}
-        classes={{ root: classes.buttonIconRoot }}
-        onClick={() => onRemove({ product })}
-      >
-        <Remove />
-      </IconButton>
-      <IconButton
-        classes={{
-          root: `${classes.buttonIconRoot} ${classes.buttonDelete}`
-        }}
-        style={{ marginLeft: 5 }}
-        tabIndex={-1}
-        onClick={() => onDelete({ product })}
-      >
-        <Delete />
-      </IconButton>
-    </div>
     <div>
       <Typography>{`${name} ${sku}`}</Typography>
     </div>

@@ -24,7 +24,10 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "precommit": "lint-staged",
-    "lint": "eslint src"
+    "lint": "eslint src",
+    "predeploy": "yarn build",
+    "deploy":
+      "cp build/index.html build/200.html && surge build/ caixa-zg.surge.sh"
   },
   "devDependencies": {
     "babel-eslint": "^7.2.3",
@@ -43,7 +46,8 @@
     "lint-staged": "^6.1.0",
     "prettier": "^1.10.2",
     "redux-logger": "^3.0.6",
-    "redux-saga-tester": "^1.0.379"
+    "redux-saga-tester": "^1.0.379",
+    "surge": "^0.19.0"
   },
   "jest": {
     "snapshotSerializers": [
